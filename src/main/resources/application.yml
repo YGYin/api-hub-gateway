@@ -1,0 +1,30 @@
+server:
+  port: 8080
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: to_api_interface
+          uri: http://localhost:8234
+          predicates:
+            - Path=/api/**
+      default-filters:
+        - AddResponseHeader=source, yg
+
+logging:
+  level:
+    org:
+      springframework:
+        cloud:
+          gateway: trace
+
+# Duddo and Nacos
+dubbo:
+  application:
+    name: dubbo-api-platform-provider
+  protocol:
+    name: dubbo
+    port: -1
+  registry:
+    id: nacos-registry
+    address: nacos://localhost:8848
